@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="xiaobaiyun.mynotebook.mapper.ArticleMapper">
+
+    <resultMap id="ArticleListResultMap" type="xiaobaiyun.mynotebook.pojo.vo.ArticleListVO">
+        <id column="id" property="id"/>
+        <result column="user_id" property="userId"/>
+        <result column="class_id" property="classId"/>
+    </resultMap>
+
+    <resultMap id="ArticleQueryResultMap" type="xiaobaiyun.mynotebook.pojo.vo.ArticleQueryVO">
+        <id column="id" property="id"/>
+        <result column="title" property="title"/>
+        <result column="user_id" property="userId"/>
+        <result column="content" property="content"/>
+    </resultMap>
+
+    <insert id="addNewArticle" useGeneratedKeys="true" keyProperty="id">
+        INSERT INTO article(
+                            title,user_id, content, class_id,is_Public
+                            )
+                    VALUES(
+                            #{title},#{userId},#{content},#{classId},#{isPublic}
+                        )
+    </insert>
+    
+    <select id="listArticle" resultMap="ArticleListResultMap">
+        SELECT id, title,user_id, class_id FROM article WHERE user_id=#{userId} And class_id=#{classId}
+    </select>
+
+    <select id="queryByArticleId" resultMap="ArticleQueryResultMap">
+        SELECT id,title,content,user_id FROM article WHERE id=#{id}
+    </select>
+</mapper>
